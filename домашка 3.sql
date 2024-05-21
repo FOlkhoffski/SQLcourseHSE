@@ -172,4 +172,10 @@ JOIN pupil p ON s.schoolno = p.schoolno
 GROUP BY s.name
 HAVING AVG(p.grade) > 80;
 
-4) 
+4) -- Объединённый список школ с указанием таблицы, из которой была взята запись 
+SELECT schoolno, name, 'school' AS источник
+FROM school
+UNION
+SELECT schoolno, name, 'school2' AS источник
+FROM school2;
+ 
