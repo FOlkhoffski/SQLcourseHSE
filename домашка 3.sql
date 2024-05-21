@@ -52,7 +52,7 @@ INSERT INTO parents VALUES (6, 'Сидорова Анна' , 'ж');
 
 --- Дополнительные 5 запросов к БД
 1) -- Вывести имена родиетей высокобалльников 
-  SELECT p.pupname as ФИО_ученика, par.parname as ФИО_родителя FROM pupils p WHERE score > 80 JOIN parents par ON p.pupnum = par.parnum
+  SELECT p.pupname as ФИО_ученика, par.parname as ФИО_родителя FROM pupils p WHERE score > 80 JOIN parents par ON p.pupnum = par.parnum;
 2) -- Вывести список всех учеников с именами и полом их родителей
 SELECT p.pupname AS ФИО_ученика, par.parname AS ФИО_родителя, 'м' AS Пол_родителя
 FROM pupils p
