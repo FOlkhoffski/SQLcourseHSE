@@ -144,3 +144,32 @@ INSERT INTO pupil  VALUES(777, 013, 'Васильев Иван Петрович'
 7) SELECT * FROM school s RIGHT JOIN pupil p ON s.schoolno = p.schoolno;
 8) SELECT * FROM school s FULL OUTER JOIN pupil p ON s.schoolno = p.schoolno;
 9) SELECT DISTINCT name FROM school JOIN pupil ON school.schoolno = pupil.schoolno;
+
+
+--- Дополнительные 5 запросов:
+1) -- Школы и ученики, родившиеся после 2003 года
+SELECT s.name AS Название_школы, 
+       COUNT(p.pupnum) AS Число_учеников
+FROM school s
+JOIN pupil p ON s.schoolno = p.schoolno
+WHERE p.born > DATE '2003-01-01'
+GROUP BY s.name;
+
+2) -- Список школ с общим количеством учеников и их средней оценкой, включая школы без учеников
+  SELECT s.name AS Название_школы, 
+       COUNT(p.pupnum) AS Число_учеников, 
+       COALESCE(AVG(p.grade), 0) AS Средняя_оценка
+FROM school s
+LEFT JOIN pupil p ON s.schoolno = p.schoolno
+GROUP BY s.name;
+
+3) -- Школы со средней оценкой выше 80 и числом учеников в ней
+SELECT s.name AS Название_школы, 
+       AVG(p.grade) AS Средняя_оценка, 
+       COUNT(p.pupnum) AS Число_учеников
+FROM school s
+JOIN pupil p ON s.schoolno = p.schoolno
+GROUP BY s.name
+HAVING AVG(p.grade) > 80;
+
+4) 
