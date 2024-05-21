@@ -50,10 +50,43 @@ INSERT INTO parents VALUES (6, 'Сидорова Анна' , 'ж');
 8) SELECT p.pupname as ФИО_ученика, COUNT(par.parname) as Кол_во_родителей FROM parents par JOIN pupils p ON p.pupnum = par.pupnum GROUP BY(p.pupname); 
 9) -- Просчитать количество женщин-родителей в каждой школе
 
+--- Дополнительные 5 запросов к БД
+1) SELECT p.pupname as ФИО_ученика, par.parname as ФИО_родителя FROM pupils p WHERE score > 80 JOIN parents par ON p.pupnum = par.parnum
+2) SELECT p.pupname AS ФИО_ученика, par.parname AS ФИО_родителя, 'м' AS Пол_родителя
+FROM pupils p
+JOIN parents pa ON pu.pupnum = pa.pupnum
+WHERE par.sex = 'м'
+UNION
+SELECT p.pupname AS ФИО_ученика, pa.parname AS ФИО_родителя, 'ж' AS Пол_родителя
+FROM pupils p
+JOIN parents par ON p.pupnum = par.pupnum
+WHERE par.sex = 'ж';
+3) SELECT s.sname AS Название_школы, 
+       MAX(YEAR(CURDATE()) - YEAR(p.birth)) AS Самый_старый, 
+       MIN(YEAR(CURDATE()) - YEAR(p.birth)) AS Самый_молодой
+FROM schools s
+JOIN pupils p ON s.snum = p.snum
+GROUP BY s.sname;
+4) SELECT s.sname AS Название_школы, COUNT(par.parname) AS Число_родителей
+FROM schools s
+JOIN pupils p ON s.snum = p.snum
+JOIN parents par ON p.pupnum = par.pupnum
+GROUP BY s.sname;
+5) SELECT p.pupname AS pupil_name, par.parname AS ФИО_родителя
+FROM pupils p
+WHERE par.sex = 'ж'
+JOIN parents par ON p.pupnum = par.pupnum
+ORDER BY p.pupname;
 
 
 
 
+
+
+
+
+
+  --------------
 ---Создаём таблицу «Школы»
 CREATE TABLE school ( 
 schoolno NUMERIC(3) CONSTRAINT pk_sch PRIMARY KEY, 
