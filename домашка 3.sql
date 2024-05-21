@@ -51,8 +51,10 @@ INSERT INTO parents VALUES (6, 'Сидорова Анна' , 'ж');
 9) -- Просчитать количество женщин-родителей в каждой школе
 
 --- Дополнительные 5 запросов к БД
-1) SELECT p.pupname as ФИО_ученика, par.parname as ФИО_родителя FROM pupils p WHERE score > 80 JOIN parents par ON p.pupnum = par.parnum
-2) SELECT p.pupname AS ФИО_ученика, par.parname AS ФИО_родителя, 'м' AS Пол_родителя
+1) -- Вывести имена родиетей высокобалльников 
+  SELECT p.pupname as ФИО_ученика, par.parname as ФИО_родителя FROM pupils p WHERE score > 80 JOIN parents par ON p.pupnum = par.parnum
+2) -- Вывести список всех учеников с именами и полом их родителей
+SELECT p.pupname AS ФИО_ученика, par.parname AS ФИО_родителя, 'м' AS Пол_родителя
 FROM pupils p
 JOIN parents pa ON pu.pupnum = pa.pupnum
 WHERE par.sex = 'м'
@@ -61,18 +63,21 @@ SELECT p.pupname AS ФИО_ученика, pa.parname AS ФИО_родителя
 FROM pupils p
 JOIN parents par ON p.pupnum = par.pupnum
 WHERE par.sex = 'ж';
-3) SELECT s.sname AS Название_школы, 
+3) -- Вывести возраст старших и младших учеников 
+SELECT s.sname AS Название_школы, 
        MAX(YEAR(CURDATE()) - YEAR(p.birth)) AS Самый_старый, 
        MIN(YEAR(CURDATE()) - YEAR(p.birth)) AS Самый_молодой
 FROM schools s
 JOIN pupils p ON s.snum = p.snum
 GROUP BY s.sname;
-4) SELECT s.sname AS Название_школы, COUNT(par.parname) AS Число_родителей
+4) --  Вывести количество родителей по школе
+SELECT s.sname AS Название_школы, COUNT(par.parname) AS Число_родителей
 FROM schools s
 JOIN pupils p ON s.snum = p.snum
 JOIN parents par ON p.pupnum = par.pupnum
 GROUP BY s.sname;
-5) SELECT p.pupname AS pupil_name, par.parname AS ФИО_родителя
+5) -- Запрос для получения имен учеников и их родителей-женщин, отсортированных по именам учеников 
+  SELECT p.pupname AS pupil_name, par.parname AS ФИО_родителя
 FROM pupils p
 WHERE par.sex = 'ж'
 JOIN parents par ON p.pupnum = par.pupnum
