@@ -156,7 +156,7 @@ WHERE p.born > DATE '2003-01-01'
 GROUP BY s.name;
 
 2) -- Список школ с общим количеством учеников и их средней оценкой, включая школы без учеников
-  SELECT s.name AS Название_школы, 
+SELECT s.name AS Название_школы, 
        COUNT(p.pupnum) AS Число_учеников, 
        COALESCE(AVG(p.grade), 0) AS Средняя_оценка
 FROM school s
