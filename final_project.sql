@@ -38,7 +38,7 @@ CREATE TABLE bookings (
 CREATE TABLE reserved (
     reserved_id INT PRIMARY KEY,
     employee_name VARCHAR(100) NOT NULL,
- 	reserve_date DATE,
+    reserve_date DATE,
     reserve_time TIMESTAMP NOT NULL,
     booking_id INT,
     FOREIGN KEY (booking_id) REFERENCES bookings(booking_id)
