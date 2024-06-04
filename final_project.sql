@@ -1,6 +1,6 @@
 -- Создание таблицы guests
 CREATE TABLE guests (
-    guest_id NUMBER PRIMARY KEY,
+    guest_id INT PRIMARY KEY,
     full_name VARCHAR(100) NOT NULL,
     gender CHAR(1) CHECK (gender IN ('M', 'F')),
     phone VARCHAR(15),
@@ -9,25 +9,25 @@ CREATE TABLE guests (
 
 -- Создание таблицы rooms
 CREATE TABLE rooms (
-    room_id NUMBER PRIMARY KEY,
-    room_number NUMBER UNIQUE NOT NULL,
+    room_id INT PRIMARY KEY,
+    room_INT INT UNIQUE NOT NULL,
     type VARCHAR(50) NOT NULL,
-    price NUMBER(10, 2) NOT NULL
+    price INT(10, 2) NOT NULL
 );
 
 -- Создание таблицы services
 CREATE TABLE services (
-    service_id NUMBER PRIMARY KEY,
+    service_id INT PRIMARY KEY,
     service_name VARCHAR(100) NOT NULL,
     service_type VARCHAR(50) CHECK (service_type IN ('basic', 'vip')),
-    price NUMBER(10, 2) NOT NULL
+    price INT(10, 2) NOT NULL
 );
 
 -- Создание таблицы bookings
 CREATE TABLE bookings (
-    booking_id NUMBER PRIMARY KEY,
-    guest_id NUMBER,
-    room_id NUMBER,
+    booking_id INT PRIMARY KEY,
+    guest_id INT,
+    room_id INT,
     check_in DATE NOT NULL,
     check_out DATE NOT NULL,
     FOREIGN KEY (guest_id) REFERENCES guests(guest_id),
@@ -36,18 +36,18 @@ CREATE TABLE bookings (
 
 -- Создание таблицы reserved
 CREATE TABLE reserved (
-    reserved_id NUMBER PRIMARY KEY,
+    reserved_id INT PRIMARY KEY,
     employee_name VARCHAR(100) NOT NULL,
     reserve_time TIMESTAMP NOT NULL,
-    booking_id NUMBER,
+    booking_id INT,
     FOREIGN KEY (booking_id) REFERENCES bookings(booking_id)
 );
 
 -- Создание таблицы opt_bookings
 CREATE TABLE opt_bookings (
     service_date DATE,
-    service_id NUMBER,
-    room_id NUMBER,
+    service_id INT,
+    room_id INT,
     PRIMARY KEY (service_date, service_id),
     place VARCHAR(100) NOT NULL,
     FOREIGN KEY (service_id) REFERENCES services(service_id),
@@ -71,7 +71,7 @@ INSERT INTO guests (guest_id, full_name, gender, phone, email) VALUES
     
 
 -- Заполнение таблицы rooms
-INSERT INTO rooms (room_id, room_number, type, price) VALUES
+INSERT INTO rooms (room_id, room_INT, type, price) VALUES
 (1, 101, 'одноместный', 30000.00),
 (2, 102, 'двухместный', 50000.00),
 (3, 201, 'люкс', 100000.00),
@@ -149,10 +149,10 @@ JOIN bookings b ON g.guest_id = b.guest_id
 WHERE b.check_out >= TO_DATE('2023-06-13', 'YYYY-MM-DD');
 
 -- Вывести все комнаты с их текущей ценой и количеством бронирований:
-SELECT r.room_number, r.price, COUNT(b.booking_id) AS booking_count
+SELECT r.room_INT, r.price, COUNT(b.booking_id) AS booking_count
 FROM rooms r
 LEFT JOIN bookings b ON r.room_id = b.room_id
-GROUP BY r.room_number, r.price;
+GROUP BY r.room_INT, r.price;
 
 -- Вывести сотрудников, делавших бронирования и их количество
 SELECT r.employee_name, COUNT(r.reserved_id) AS total_reservations
