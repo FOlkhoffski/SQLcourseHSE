@@ -84,10 +84,15 @@ INSERT INTO rooms (room_id, room_number, type, price) VALUES
 -- Заполнение таблицы services
 INSERT INTO services (service_id, service_name, service_type, price) VALUES
 (1, 'завтрак', 'basic', 1500.00),
-(2, 'уборка номера', 'basic', 800.00),
+(2, 'уборка номера', 'basic', 1000.00),
 (3, 'прачечная', 'vip', 2000.00),
 (4, 'спа-услуги', 'vip', 5000.00),
-(5, 'ужин', 'basic', 2000.00);
+(5, 'ужин', 'basic', 2000.00),
+(6, 'room-service', 'basic', 500.00),
+(7, 'мини-бар', 'basic', 1500.00),
+(8, 'мини-бар', 'vip', 5000.00),
+(9, 'частный гид', 'vip', 15000.00),
+(10, 'концерт группы', 'vip', 20000.00)
 
 -- Заполнение таблицы bookings
 INSERT INTO bookings (booking_id, guest_id, room_id, check_in, check_out) VALUES
