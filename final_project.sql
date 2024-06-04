@@ -60,10 +60,18 @@ CREATE TABLE opt_bookings (
 -- Заполнение таблицы guests
 INSERT INTO guests (guest_id, full_name, gender, phone, email) VALUES
 (1, 'Иван Иванов', 'M', '1234567890', 'ivanovii@gmail.com'),
-(2, 'Дмитрий Лапшин', 'F', '1342547893', 'smirnovami@mail.ru'),
+(2, 'Дмитрий Лапшин', 'M', '1342547893', 'smirnovami@mail.ru'),
 (3, 'Александр Сорочайкин', 'M', '71123941513', 'PETRov@yahoo.com'),
-(4, 'Степан Дидуренко', 'F', '214901235', 'sidova@hse.ru'),
-(5, 'Наталья Фирстова', 'F', '3900021235', 'kuznetsovahelga@gmail.com');
+(4, 'Степан Дидуренко', 'M', '214901235', 'sidova@hse.ru'),
+(5, 'Наталья Фирстова', 'F', '3900021235', 'kuznetsovahelga@gmail.com'),
+(6, 'Яков Лава', 'F', '6934519820', 'yakapakhlava@gmail.com'),
+(7, 'Володимир Абибасов','M', '8206724921', 'vladidas@mail.ru'),
+(8, 'Карл Пирсон', 'M', '7911452176', 'chisquare@stat.com'),
+(9, 'Рональд Фишер', 'M', '6881372142', 'ftestbyme@mai.ru'),
+(10, 'Андрей Марков', 'M', '7194632914', 'chainmark@yandex.ru'),
+(11, 'Болеслав Терминатор', 'M', '2315152328', 'terminator228@list.ru'),
+(12, 'Мирослав Трансформер', 'M', '8451839871', 'transformer420@yahoo.com');
+    
 
 -- Заполнение таблицы rooms
 INSERT INTO rooms (room_id, room_number, type, price) VALUES
@@ -83,11 +91,12 @@ INSERT INTO services (service_id, service_name, service_type, price) VALUES
 
 -- Заполнение таблицы bookings
 INSERT INTO bookings (booking_id, guest_id, room_id, check_in, check_out) VALUES
-(11, 1, 101, '2024-06-01', '2024-06-10'),
-(12, 2, 201, '2024-06-05', '2024-06-15'),
-(13, 3, 102, '2024-06-07', '2024-06-12'),
-(14, 4, 202, '2024-06-02', '2024-06-09'),
-(15, 5, 301, '2024-06-03', '2024-06-08');
+(111, 1, 101, '2024-06-01', '2024-06-10'),
+(112, 2, 201, '2024-06-05', '2024-06-15'),
+(113, 3, 102, '2024-06-07', '2024-06-12'),
+(114, 4, 202, '2024-06-02', '2024-06-09'),
+(115, 8, 301, '2024-06-03', '2024-06-08'),
+(116, 5, 102, '2024-06-07', '2024-06-12');
 
 -- Заполнение таблицы reserved
 INSERT INTO reserved (reserved_id, employee_name, reserve_time, booking_id) VALUES
