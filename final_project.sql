@@ -38,6 +38,7 @@ CREATE TABLE bookings (
 CREATE TABLE reserved (
     reserved_id INT PRIMARY KEY,
     employee_name VARCHAR(100) NOT NULL,
+ 	reserve_date DATE,
     reserve_time TIMESTAMP NOT NULL,
     booking_id INT,
     FOREIGN KEY (booking_id) REFERENCES bookings(booking_id)
@@ -48,8 +49,8 @@ CREATE TABLE opt_bookings (
     service_date DATE,
     service_id INT,
     room_id INT,
-    PRIMARY KEY (service_date, service_id),
-    place VARCHAR(100) NOT NULL,
+    place VARCHAR(50) NOT NULL,
+	PRIMARY KEY (service_date, service_id),
     FOREIGN KEY (service_id) REFERENCES services(service_id),
     FOREIGN KEY (room_id) REFERENCES rooms(room_id)
 );
@@ -94,29 +95,28 @@ INSERT INTO services (service_id, service_name, service_type, price) VALUES
 
 -- Заполнение таблицы bookings
 INSERT INTO bookings (booking_id, guest_id, room_id, check_in, check_out) VALUES
-(111, 1, 101, TO_DATE('2024-06-01', 'YYYY-MM-DD'), TO_DATE('2024-06-10', 'YYYY-MM-DD')),
-(112, 2, 201, TO_DATE('2024-06-05', 'YYYY-MM-DD'), TO_DATE('2024-06-16', 'YYYY-MM-DD')),
-(113, 3, 102, TO_DATE('2024-06-07', 'YYYY-MM-DD'), TO_DATE('2024-06-12', 'YYYY-MM-DD')),
-(114, 4, 202, TO_DATE('2024-06-02', 'YYYY-MM-DD'), TO_DATE('2024-06-21', 'YYYY-MM-DD')),
-(115, 8, 301, TO_DATE('2024-06-03', 'YYYY-MM-DD'), TO_DATE('2024-06-08', 'YYYY-MM-DD')),
-(116, 5, 102, TO_DATE('2024-06-07', 'YYYY-MM-DD'), TO_DATE('2024-06-12', 'YYYY-MM-DD'));
+(111, 1, 101, '2024-06-01', '2024-06-10'),
+(112, 2, 201, '2024-06-05', '2024-06-16'),
+(113, 3, 102, '2024-06-07', '2024-06-12'),
+(114, 4, 202, '2024-06-02', '2024-06-21'),
+(115, 8, 301, '2024-06-03', '2024-06-08'), 
+(116, 5, 102, '2024-06-07', '2024-06-12');
 
 -- Заполнение таблицы reserved
-INSERT INTO reserved (reserved_id, employee_name, reserve_time, booking_id) VALUES
-(1, 'Владимир Хихитрян', TO_TIMESTAMP('2024-05-25 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), 111),
-(2, 'Ольга Бузова', TO_TIMESTAMP('2024-05-26 11:00:00', 'YYYY-MM-DD HH24:MI:SS'), 112),
-(3, 'Владимир Хихитрян', TO_TIMESTAMP('2024-05-27 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), 113),
-(4, 'Наталья Емелина', TO_TIMESTAMP('2024-05-28 13:00:00', 'YYYY-MM-DD HH24:MI:SS'), 114),
-(5, 'Сергей Володилав', TO_TIMESTAMP('2024-05-29 14:00:00', 'YYYY-MM-DD HH24:MI:SS'), 115);
+INSERT INTO reserved (reserved_id, employee_name, reserve_date, reserve_time, booking_id) VALUES
+(1, 'Владимир Хихитрян', '2024-05-25', '10:00:00', 111),
+(2, 'Ольга Бузова', '2024-05-26', '11:00:00', 112),
+(3, 'Владимир Хихитрян', '2024-05-27', '12:00:00', 113),
+(4, 'Наталья Емелина', '2024-05-28', '13:00:00', 114),
+(5, 'Сергей Володилав', '2024-05-29', '14:00:00', 115);
 
 -- Заполнение таблицы opt_bookings
 INSERT INTO opt_bookings (service_date, service_id, room_id, place) VALUES
-(TO_DATE('2024-06-05', 'YYYY-MM-DD'), 1, 101, 'ресторан'),
-(TO_DATE('2024-06-05', 'YYYY-MM-DD'), 2, 102, 'номер'),
-(TO_DATE('2024-06-09', 'YYYY-MM-DD'), 3, 201, 'прачечная'),
-(TO_DATE('2024-06-03', 'YYYY-MM-DD'), 4, 202, 'спа-центр'),
-(TO_DATE('2024-06-06', 'YYYY-MM-DD'), 5, 301, 'ресторан');
-
+('2024-06-05', 1, 101, 'ресторан'),
+('2024-06-05', 2, 102, 'номер'),
+('2024-06-09', 3, 201, 'прачечная'),
+('2024-06-03', 4, 202, 'спа-центр'),
+('2024-06-06', 5, 301, 'ресторан');
 
 
 --- Создадим SQL запросы:
