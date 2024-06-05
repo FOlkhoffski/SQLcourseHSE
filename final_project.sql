@@ -200,16 +200,24 @@ UPDATE rooms
 SET price = price * 1.07
 WHERE type IN ('стандарт', 'люкс');
 
--- Выведем имена и телефоны всех гостей, у которых нет электронной почты
+-- Вывести имена и телефоны всех гостей, у которых нет электронной почты
 SELECT full_name, phone
 FROM guests
 WHERE email IS NULL;
 
--- Выведем размер одежды сотрудников, которые сделали бронирование 25 июня
+-- Вывести размер одежды сотрудников, которые сделали бронирование 25 июня
 SELECT e.emp_size, COUNT(*) as size_count
 FROM reserved r
 JOIN employees e ON r.employee_name = e.emplpyee_name
 WHERE r.reserve_date = '2024-06-25'
 GROUP BY e.emp_size;
+
+-- Вывести все номера, которые были забронированы подчинёнными Натальи Емелиной
+SELECT b.room_id
+FROM bookings b
+JOIN reserved r ON b.booking_id = r.booking_id
+JOIN employees e1 ON r.employee_name = e1.emplpyee_name
+JOIN employees e2 ON e2.emplpyee_name = 'Наталья Емелина'
+WHERE e1.emp_left > e2.emp_left AND e1.emp_right < e2.emp_right;
 
 
