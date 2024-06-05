@@ -23,6 +23,7 @@ CREATE TABLE services (
     price INT(10, 2) NOT NULL
 );
 
+DROP TABLE bookings
 -- Создание таблицы bookings
 CREATE TABLE bookings (
     booking_id INT PRIMARY KEY,
@@ -73,12 +74,12 @@ INSERT INTO guests (guest_id, full_name, gender, phone, email) VALUES
 
 -- Заполнение таблицы rooms
 INSERT INTO rooms (room_id, room_INT, type, price) VALUES
-(1, 101, 'одноместный', 30000.00),
-(2, 102, 'двухместный', 50000.00),
-(3, 201, 'люкс', 100000.00),
-(4, 202, 'полулюкс', 70000.00),
-(5, 301, 'стандарт', 40000.00),
-(6, 103, 'одноместный', 35000.00);
+(101, 1, 'одноместный', 30000.00),
+(102, 2, 'двухместный', 50000.00),
+(201, 3, 'люкс', 100000.00),
+(202, 4, 'полулюкс', 70000.00),
+(103, 5, 'стандарт', 40000.00),
+(301, 6, 'одноместный', 35000.00);
 
 -- Заполнение таблицы services
 INSERT INTO services (service_id, service_name, service_type, price) VALUES
@@ -100,7 +101,10 @@ INSERT INTO bookings (booking_id, guest_id, room_id, check_in, check_out) VALUES
 (113, 3, 102, '2024-06-07', '2024-06-12'),
 (114, 4, 202, '2024-06-02', '2024-06-21'),
 (115, 8, 301, '2024-06-03', '2024-06-08'), 
-(116, 5, 102, '2024-06-07', '2024-06-12');
+(116, 5, 102, '2024-06-07', '2024-06-12'),
+(117, 12, 201, '2024-07-12', '2024-07-17'),
+(118, 9, 202, '2024-06-22', '2024-06-24'),
+(119, 11, 301, '2024-06-15', '2024-07-12');
 
 -- Заполнение таблицы reserved
 INSERT INTO reserved (reserved_id, employee_name, reserve_date, reserve_time, booking_id) VALUES
@@ -142,11 +146,11 @@ WHERE service_id IN (
     WHERE service_type = 'vip'
 );
 
--- Вывести всех гостей, кто выезжает после 13 июня
+-- Вывести всех гостей и их электронную почту, кто выезжает после 13 июня
 SELECT DISTINCT g.full_name, g.email
 FROM guests g
 JOIN bookings b ON g.guest_id = b.guest_id
-WHERE b.check_out >= TO_DATE('2023-06-13', 'YYYY-MM-DD');
+WHERE b.check_out >= '2023-06-13';
 
 -- Вывести все комнаты с их текущей ценой и количеством бронирований:
 SELECT r.room_INT, r.price, COUNT(b.booking_id) AS booking_count
@@ -161,7 +165,7 @@ WHERE r.booking_id IN (SELECT booking_id FROM bookings)
 GROUP BY r.employee_name;
 
 -- Вывести количество бронирований для каждого типа комнаты
-SELECT r.type, COUNT(b.booking_id) AS booking_count
+SELECT r.type, COUNT(b.booking_id) AS booking_count 
 FROM rooms r
 LEFT JOIN bookings b ON r.room_id = b.room_id
 GROUP BY r.type;
@@ -179,5 +183,3 @@ WHERE type IN ('стандарт', 'люкс');
 SELECT full_name, phone
 FROM guests
 WHERE email IS NULL;
-
-
