@@ -38,10 +38,11 @@ CREATE TABLE bookings (
 -- Создание таблицы reserved
 CREATE TABLE reserved (
     reserved_id INT PRIMARY KEY,
-    employee_name VARCHAR(100) NOT NULL,
+    employee_name VARCHAR(100),
     reserve_date DATE,
     reserve_time TIMESTAMP NOT NULL,
     booking_id INT,
+    FOREIGN KEY (employee_name) REFERENCES employees(employee_name),
     FOREIGN KEY (booking_id) REFERENCES bookings(booking_id)
 );
 
@@ -51,9 +52,18 @@ CREATE TABLE opt_bookings (
     service_id INT,
     room_id INT,
     place VARCHAR(50) NOT NULL,
-	PRIMARY KEY (service_date, service_id),
+    PRIMARY KEY (service_date, service_id),
     FOREIGN KEY (service_id) REFERENCES services(service_id),
     FOREIGN KEY (room_id) REFERENCES rooms(room_id)
+);
+
+-- Создание таблицы employees
+CREATE TABLE employees (
+	id_emp INT, 
+	employee_name VARCHAR(100) NOT NULL,
+	emp_size VARCHAR(10) CHECK (emp_size IN ('XS', 'S', 'M', 'L', 'XL')),
+	emp_left INT, 
+	emp_right INT
 );
 
 -- Заполнение таблицы guests
@@ -108,11 +118,13 @@ INSERT INTO bookings (booking_id, guest_id, room_id, check_in, check_out) VALUES
 
 -- Заполнение таблицы reserved
 INSERT INTO reserved (reserved_id, employee_name, reserve_date, reserve_time, booking_id) VALUES
-(1, 'Владимир Хихитрян', '2024-05-25', '10:00:00', 111),
-(2, 'Ольга Бузова', '2024-05-26', '11:00:00', 112),
-(3, 'Владимир Хихитрян', '2024-05-27', '12:00:00', 113),
-(4, 'Наталья Емелина', '2024-05-28', '13:00:00', 114),
-(5, 'Сергей Володилав', '2024-05-29', '14:00:00', 115);
+(1, 'Владимир Хихитрян', '2024-05-25', '10:10:00', 111),
+(2, 'Ольга Бузова', '2024-05-26', '11:49:00', 112),
+(3, 'Владимир Хихитрян', '2024-05-27', '12:23:00', 113),
+(4, 'Наталья Емелина', '2024-05-28', '13:54:00', 114),
+(5, 'Сергей Володилав', '2024-05-25', '14:01:00', 115),
+(6, 'Татьяна Многофеева', '2024-05-25', '22:30:00', 118),
+(7, 'Марк Кельберт', '2024-05-25', '23:15:00', 116);
 
 -- Заполнение таблицы opt_bookings
 INSERT INTO opt_bookings (service_date, service_id, room_id, place) VALUES
@@ -122,6 +134,15 @@ INSERT INTO opt_bookings (service_date, service_id, room_id, place) VALUES
 ('2024-06-03', 4, 202, 'спа-центр'),
 ('2024-06-06', 5, 301, 'ресторан');
 
+-- Заполнение таблицы employees
+INSERT INTO employees (id_emp, employee_name, emp_size, emp_left, emp_right) VALUES
+(1111, 'Владимир Хихитрян', 'L', 1, 14),
+(1112, 'Наталья Емелина', 'M', 2, 11), 
+(1113, 'Юлия Войонкина', 'M', 12, 13),
+(1114, 'Сергей Володилав', 'XS', 3, 8), 
+(1115, 'Ольга Бузова', 'XS', 4, 5),
+(1116, 'Марк Кельберт', 'XL', 6, 7),
+(1117, 'Татьяна Многофеева', 'XS', 9, 10);
 
 --- Создадим SQL запросы:
 
@@ -183,3 +204,12 @@ WHERE type IN ('стандарт', 'люкс');
 SELECT full_name, phone
 FROM guests
 WHERE email IS NULL;
+
+-- Выведем размер одежды сотрудников, которые сделали бронирование 25 июня
+SELECT e.emp_size, COUNT(*) as size_count
+FROM reserved r
+JOIN employees e ON r.employee_name = e.emplpyee_name
+WHERE r.reserve_date = '2024-06-25'
+GROUP BY e.emp_size;
+
+
